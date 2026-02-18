@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OfficeFlow - Couriers</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Courier Management</h1>
+        <div class="nav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="bills.html">Bills</a>
+            <a href="couriers.html" class="active">Couriers</a>
+            <a href="assets.html">Assets</a>
+            <a href="complaints.html">Complaints</a>
+            <div class="user-info">
+                <span id="userName"></span>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card" id="courierFormCard" style="display: none;">
+            <div class="card-header">
+                <h2>New Courier Entry</h2>
+            </div>
+            <form id="courierForm">
+                <div class="form-group">
+                    <label for="tracking_number">Tracking Number *</label>
+                    <input type="text" id="tracking_number" name="tracking_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="vendor_id">Vendor *</label>
+                    <select id="vendor_id" name="vendor_id" required>
+                        <option value="">Select vendor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="assigned_to">Assign To Employee *</label>
+                    <select id="assigned_to" name="assigned_to" required>
+                        <option value="">Select employee</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Slip Image</label>
+                    <input type="file" id="slipFile" accept="image/*">
+                    <img id="slipPreview" style="max-width: 300px; margin-top: 10px; display: none;">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Courier</button>
+                <div id="courierMessage" class="error-message"></div>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Courier List</h2>
+                <button class="btn btn-primary" id="newCourierBtn" style="display: none;">New Courier</button>
+            </div>
+            <div class="table-container">
+                <table id="couriersTable">
+                    <thead>
+                        <tr>
+                            <th>Tracking Number</th>
+                            <th>Vendor</th>
+                            <th>Assigned To</th>
+                            <th>Status</th>
+                            <th>Received At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="couriersTableBody">
+                        <tr>
+                            <td colspan="6" class="loading">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/couriers.js"></script>
+</body>
+</html>

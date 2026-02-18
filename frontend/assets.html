@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OfficeFlow - Assets</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Asset Management</h1>
+        <div class="nav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="bills.html">Bills</a>
+            <a href="couriers.html">Couriers</a>
+            <a href="assets.html" class="active">Assets</a>
+            <a href="complaints.html">Complaints</a>
+            <div class="user-info">
+                <span id="userName"></span>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card" id="assetFormCard" style="display: none;">
+            <div class="card-header">
+                <h2>Register New Asset</h2>
+            </div>
+            <form id="assetForm">
+                <div class="form-group">
+                    <label for="asset_id">Asset ID *</label>
+                    <input type="text" id="asset_id" name="asset_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="asset_name">Asset Name *</label>
+                    <input type="text" id="asset_name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="asset_category">Category</label>
+                    <input type="text" id="asset_category" name="category">
+                </div>
+                <div class="form-group">
+                    <label for="asset_description">Description</label>
+                    <textarea id="asset_description" name="description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="asset_department">Department *</label>
+                    <input type="text" id="asset_department" name="department" required>
+                </div>
+                <div class="form-group">
+                    <label>Asset Image</label>
+                    <input type="file" id="assetImageFile" accept="image/*">
+                    <img id="assetImagePreview" style="max-width: 300px; margin-top: 10px; display: none;">
+                </div>
+                <button type="submit" class="btn btn-primary">Register Asset</button>
+                <div id="assetMessage" class="error-message"></div>
+            </form>
+        </div>
+
+        <div class="card" id="issueFormCard" style="display: none;">
+            <div class="card-header">
+                <h2>Issue Asset</h2>
+            </div>
+            <form id="issueForm">
+                <div class="form-group">
+                    <label for="issue_asset_id">Asset *</label>
+                    <select id="issue_asset_id" name="asset_id" required>
+                        <option value="">Select asset</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="issue_employee_id">Employee ID *</label>
+                    <input type="number" id="issue_employee_id" name="employee_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="due_date">Due Date *</label>
+                    <input type="date" id="due_date" name="due_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="condition_on_issue">Condition</label>
+                    <select id="condition_on_issue" name="condition_on_issue">
+                        <option value="Good">Good</option>
+                        <option value="Fair">Fair</option>
+                        <option value="Poor">Poor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Employee Signature *</label>
+                    <div class="signature-container">
+                        <canvas id="issueSignatureCanvas" width="450" height="200"></canvas>
+                    </div>
+                    <div class="signature-controls">
+                        <button type="button" class="btn btn-secondary" onclick="clearIssueSignature()">Clear</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Issue Asset</button>
+                <div id="issueMessage" class="error-message"></div>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Assets</h2>
+                <div>
+                    <button class="btn btn-primary" id="newAssetBtn" style="display: none;">New Asset</button>
+                    <button class="btn btn-success" id="issueAssetBtn" style="display: none;">Issue Asset</button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="assetsTable">
+                    <thead>
+                        <tr>
+                            <th>Asset ID</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="assetsTableBody">
+                        <tr>
+                            <td colspan="6" class="loading">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/assets.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OfficeFlow - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>OfficeFlow Dashboard</h1>
+        <div class="nav">
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="bills.html">Bills</a>
+            <a href="couriers.html">Couriers</a>
+            <a href="assets.html">Assets</a>
+            <a href="complaints.html">Complaints</a>
+            <div class="user-info">
+                <span id="userName"></span>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <h3>Total Bills</h3>
+                <div class="value" id="totalBills">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Pending Bills</h3>
+                <div class="value" id="pendingBills">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Total Couriers</h3>
+                <div class="value" id="totalCouriers">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Delayed Pickups</h3>
+                <div class="value" id="delayedPickups">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Total Assets</h3>
+                <div class="value" id="totalAssets">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Overdue Assets</h3>
+                <div class="value" id="overdueAssets">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Open Complaints</h3>
+                <div class="value" id="openComplaints">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Avg Resolution Time</h3>
+                <div class="value" id="avgResolution">0h</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Monthly Parcel Count</h2>
+            </div>
+            <div class="chart-container">
+                <canvas id="parcelChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Complaints by Category</h2>
+            </div>
+            <div class="chart-container">
+                <canvas id="complaintsCategoryChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Complaints by Priority</h2>
+            </div>
+            <div class="chart-container">
+                <canvas id="complaintsPriorityChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

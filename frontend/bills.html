@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OfficeFlow - Bills</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Expense Bills</h1>
+        <div class="nav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="bills.html" class="active">Bills</a>
+            <a href="couriers.html">Couriers</a>
+            <a href="assets.html">Assets</a>
+            <a href="complaints.html">Complaints</a>
+            <div class="user-info">
+                <span id="userName"></span>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>Upload New Bill</h2>
+            </div>
+            <form id="billForm">
+                <div class="camera-container">
+                    <h3>Capture Bill Image</h3>
+                    <video id="videoElement" autoplay style="display: none;"></video>
+                    <canvas id="captureCanvas" style="display: none;"></canvas>
+                    <img id="capturedImage" alt="Captured bill">
+                    <div class="camera-controls">
+                        <button type="button" class="btn btn-primary" id="startCameraBtn">Start Camera</button>
+                        <button type="button" class="btn btn-success" id="captureBtn" style="display: none;">Capture</button>
+                        <button type="button" class="btn btn-secondary" id="stopCameraBtn" style="display: none;">Stop Camera</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Or Upload File</label>
+                        <input type="file" id="fileInput" accept="image/*">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="bill_number">Bill Number</label>
+                    <input type="text" id="bill_number" name="bill_number">
+                </div>
+                <div class="form-group">
+                    <label for="vendor_name">Vendor Name *</label>
+                    <input type="text" id="vendor_name" name="vendor_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="vendor_gst">GST Number</label>
+                    <input type="text" id="vendor_gst" name="vendor_gst">
+                </div>
+                <div class="form-group">
+                    <label for="bill_date">Bill Date *</label>
+                    <input type="date" id="bill_date" name="bill_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" name="amount" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="gst_amount">GST Amount</label>
+                    <input type="number" id="gst_amount" name="gst_amount" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="total_amount">Total Amount *</label>
+                    <input type="number" id="total_amount" name="total_amount" step="0.01" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Bill</button>
+                <div id="billMessage" class="error-message"></div>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>My Bills</h2>
+            </div>
+            <div class="table-container">
+                <table id="billsTable">
+                    <thead>
+                        <tr>
+                            <th>Bill Number</th>
+                            <th>Vendor</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="billsTableBody">
+                        <tr>
+                            <td colspan="6" class="loading">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/bills.js"></script>
+</body>
+</html>

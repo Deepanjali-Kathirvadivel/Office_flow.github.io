@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OfficeFlow - Bill Detail</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Bill Details</h1>
+        <div class="nav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="bills.html">Bills</a>
+            <a href="couriers.html">Couriers</a>
+            <a href="assets.html">Assets</a>
+            <a href="complaints.html">Complaints</a>
+            <div class="user-info">
+                <span id="userName"></span>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card" id="billDetailCard">
+            <div class="loading">Loading...</div>
+        </div>
+
+        <div class="card" id="approvalCard" style="display: none;">
+            <div class="card-header">
+                <h2>Approval Actions</h2>
+            </div>
+            <form id="approvalForm">
+                <div class="form-group">
+                    <label for="approvalAction">Action</label>
+                    <select id="approvalAction" name="action" required>
+                        <option value="">Select action</option>
+                        <option value="approve">Approve</option>
+                        <option value="reject">Reject</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="comments">Comments</label>
+                    <textarea id="comments" name="comments" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <div id="approvalMessage" class="error-message"></div>
+            </form>
+        </div>
+
+        <div class="card" id="approvalHistoryCard" style="display: none;">
+            <div class="card-header">
+                <h2>Approval History</h2>
+            </div>
+            <div class="table-container">
+                <table id="approvalHistoryTable">
+                    <thead>
+                        <tr>
+                            <th>Level</th>
+                            <th>Approver</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Comments</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="approvalHistoryBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/bill-detail.js"></script>
+</body>
+</html>

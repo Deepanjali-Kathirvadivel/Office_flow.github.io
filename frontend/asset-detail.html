@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OfficeFlow - Asset Detail</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Asset Details</h1>
+        <div class="nav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="bills.html">Bills</a>
+            <a href="couriers.html">Couriers</a>
+            <a href="assets.html">Assets</a>
+            <a href="complaints.html">Complaints</a>
+            <div class="user-info">
+                <span id="userName"></span>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card" id="assetDetailCard">
+            <div class="loading">Loading...</div>
+        </div>
+
+        <div class="card" id="returnFormCard" style="display: none;">
+            <div class="card-header">
+                <h2>Return Asset</h2>
+            </div>
+            <form id="returnForm">
+                <input type="hidden" id="returnTransactionId">
+                <div class="form-group">
+                    <label for="condition_on_return">Condition on Return</label>
+                    <select id="condition_on_return" name="condition_on_return">
+                        <option value="Good">Good</option>
+                        <option value="Fair">Fair</option>
+                        <option value="Poor">Poor</option>
+                        <option value="Damaged">Damaged</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="damage_description">Damage Description (if any)</label>
+                    <textarea id="damage_description" name="damage_description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Damage Image (if any)</label>
+                    <input type="file" id="damageImageFile" accept="image/*">
+                    <img id="damageImagePreview" style="max-width: 300px; margin-top: 10px; display: none;">
+                </div>
+                <button type="submit" class="btn btn-primary">Return Asset</button>
+                <div id="returnMessage" class="error-message"></div>
+            </form>
+        </div>
+
+        <div class="card" id="transactionsCard" style="display: none;">
+            <div class="card-header">
+                <h2>Transaction History</h2>
+            </div>
+            <div class="table-container">
+                <table id="transactionsTable">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Issue Date</th>
+                            <th>Due Date</th>
+                            <th>Return Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionsTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card" id="historyCard" style="display: none;">
+            <div class="card-header">
+                <h2>Asset History</h2>
+            </div>
+            <div class="table-container">
+                <table id="historyTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Action</th>
+                            <th>Performed By</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/asset-detail.js"></script>
+</body>
+</html>
