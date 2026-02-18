@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+// API_BASE_URL is defined in auth.js
 
 // Check authentication
 if (!checkAuth()) {
@@ -30,7 +30,7 @@ document.getElementById('attachmentFile').addEventListener('change', async (e) =
             });
 
             const data = await response.json();
-            
+
             if (response.ok) {
                 attachmentPath = data.attachmentPath;
                 const preview = document.getElementById('attachmentPreview');
@@ -104,8 +104,8 @@ async function loadComplaints() {
         data.complaints.forEach(complaint => {
             const row = document.createElement('tr');
             const statusClass = `badge-${complaint.status.toLowerCase().replace(' ', '-')}`;
-            const priorityClass = complaint.priority === 'Critical' ? 'badge-danger' : 
-                                 complaint.priority === 'High' ? 'badge-warning' : 'badge-pending';
+            const priorityClass = complaint.priority === 'Critical' ? 'badge-danger' :
+                complaint.priority === 'High' ? 'badge-warning' : 'badge-pending';
             row.innerHTML = `
                 <td>${complaint.ticket_number}</td>
                 <td>${complaint.category}</td>
@@ -119,7 +119,7 @@ async function loadComplaints() {
         });
     } catch (error) {
         console.error('Load complaints error:', error);
-        document.getElementById('complaintsTableBody').innerHTML = 
+        document.getElementById('complaintsTableBody').innerHTML =
             '<tr><td colspan="7" class="loading">Error loading complaints</td></tr>';
     }
 }

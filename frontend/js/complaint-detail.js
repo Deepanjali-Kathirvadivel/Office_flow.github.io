@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+// API_BASE_URL is defined in auth.js
 
 // Check authentication
 if (!checkAuth()) {
@@ -35,7 +35,7 @@ async function loadComplaintDetail() {
         displayComplaintDetail(data.complaint, data.history, data.assignments);
     } catch (error) {
         console.error('Load complaint error:', error);
-        document.getElementById('complaintDetailCard').innerHTML = 
+        document.getElementById('complaintDetailCard').innerHTML =
             `<div class="error-message show">Error loading complaint: ${error.message}</div>`;
     }
 }
@@ -44,9 +44,9 @@ async function loadComplaintDetail() {
 function displayComplaintDetail(complaint, history, assignments) {
     const card = document.getElementById('complaintDetailCard');
     const statusClass = `badge-${complaint.status.toLowerCase().replace(' ', '-')}`;
-    const priorityClass = complaint.priority === 'Critical' ? 'badge-danger' : 
-                         complaint.priority === 'High' ? 'badge-warning' : 'badge-pending';
-    
+    const priorityClass = complaint.priority === 'Critical' ? 'badge-danger' :
+        complaint.priority === 'High' ? 'badge-warning' : 'badge-pending';
+
     card.innerHTML = `
         <div class="card-header">
             <h2>Ticket: ${complaint.ticket_number}</h2>
@@ -103,7 +103,7 @@ function displayComplaintDetail(complaint, history, assignments) {
     if (history && history.length > 0) {
         const historyCard = document.getElementById('historyCard');
         historyCard.style.display = 'block';
-        
+
         const tbody = document.getElementById('historyTableBody');
         tbody.innerHTML = '';
 
@@ -127,9 +127,9 @@ function displayComplaintDetail(complaint, history, assignments) {
 
 // Check if user can update
 function checkCanUpdate(complaint) {
-    const canUpdate = complaint.assigned_to === user.id || 
-                     complaint.submitted_by === user.id || 
-                     user.role === 'Admin';
+    const canUpdate = complaint.assigned_to === user.id ||
+        complaint.submitted_by === user.id ||
+        user.role === 'Admin';
 
     if (canUpdate && complaint.status !== 'Closed') {
         document.getElementById('statusUpdateCard').style.display = 'block';
@@ -160,8 +160,8 @@ document.getElementById('statusUpdateForm').addEventListener('submit', async (e)
         const response = await fetch(`${API_BASE_URL}/complaints/${complaintId}/status`, {
             method: 'PUT',
             headers: getAuthHeaders(),
-            body: JSON.stringify({ 
-                status, 
+            body: JSON.stringify({
+                status,
                 comments,
                 resolution_note: status === 'Closed' ? resolutionNote : null
             })

@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+// API_BASE_URL is defined in auth.js
 
 // Check authentication
 if (!checkAuth()) {
@@ -9,7 +9,7 @@ if (!checkAuth()) {
 const user = getCurrentUser();
 if (user) {
     document.getElementById('userName').textContent = `${user.full_name} (${user.role})`;
-    
+
     // Show new courier button for Reception role
     if (user.role === 'Reception') {
         document.getElementById('newCourierBtn').style.display = 'inline-flex';
@@ -27,7 +27,7 @@ async function loadFormData() {
             headers: getAuthHeaders()
         });
         const vendorsData = await vendorsResponse.json();
-        
+
         if (vendorsResponse.ok) {
             const vendorSelect = document.getElementById('vendor_id');
             vendorsData.vendors.forEach(vendor => {
@@ -43,7 +43,7 @@ async function loadFormData() {
             headers: getAuthHeaders()
         });
         const usersData = await usersResponse.json();
-        
+
         if (usersResponse.ok) {
             const employeeSelect = document.getElementById('assigned_to');
             usersData.users.forEach(user => {
@@ -75,7 +75,7 @@ document.getElementById('slipFile').addEventListener('change', async (e) => {
             });
 
             const data = await response.json();
-            
+
             if (response.ok) {
                 slipImagePath = data.imagePath;
                 const preview = document.getElementById('slipPreview');
@@ -163,16 +163,16 @@ async function loadCouriers() {
                 <td><span class="badge ${statusClass}">${courier.status}</span></td>
                 <td>${courier.received_at || '-'}</td>
                 <td>
-                    ${courier.assigned_to === user.id && !courier.acknowledgement_id ? 
-                        `<button class="btn btn-primary btn-sm" onclick="acknowledgeCourier(${courier.id})">Acknowledge</button>` : 
-                        '<span>Acknowledged</span>'}
+                    ${courier.assigned_to === user.id && !courier.acknowledgement_id ?
+                    `<button class="btn btn-primary btn-sm" onclick="acknowledgeCourier(${courier.id})">Acknowledge</button>` :
+                    '<span>Acknowledged</span>'}
                 </td>
             `;
             tbody.appendChild(row);
         });
     } catch (error) {
         console.error('Load couriers error:', error);
-        document.getElementById('couriersTableBody').innerHTML = 
+        document.getElementById('couriersTableBody').innerHTML =
             '<tr><td colspan="6" class="loading">Error loading couriers</td></tr>';
     }
 }
@@ -182,10 +182,10 @@ async function acknowledgeCourier(courierId) {
     // Create signature canvas modal
     const modal = document.createElement('div');
     modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;';
-    
+
     const modalContent = document.createElement('div');
     modalContent.style.cssText = 'background: white; padding: 20px; border-radius: 8px; max-width: 500px; width: 90%;';
-    
+
     modalContent.innerHTML = `
         <h3>Digital Signature</h3>
         <div class="signature-container">
@@ -197,22 +197,22 @@ async function acknowledgeCourier(courierId) {
             <button class="btn btn-secondary" onclick="closeSignatureModal()">Cancel</button>
         </div>
     `;
-    
+
     modal.appendChild(modalContent);
     document.body.appendChild(modal);
-    
+
     // Initialize signature canvas
     const canvas = document.getElementById('signatureCanvas');
     const ctx = canvas.getContext('2d');
     let isDrawing = false;
-    
+
     canvas.addEventListener('mousedown', (e) => {
         isDrawing = true;
         const rect = canvas.getBoundingClientRect();
         ctx.beginPath();
         ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
     });
-    
+
     canvas.addEventListener('mousemove', (e) => {
         if (isDrawing) {
             const rect = canvas.getBoundingClientRect();
@@ -220,18 +220,18 @@ async function acknowledgeCourier(courierId) {
             ctx.stroke();
         }
     });
-    
+
     canvas.addEventListener('mouseup', () => {
         isDrawing = false;
     });
-    
+
     window.clearSignature = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     };
-    
+
     window.submitSignature = async () => {
         const signatureData = canvas.toDataURL();
-        
+
         try {
             const response = await fetch(`${API_BASE_URL}/couriers/${courierId}/acknowledge`, {
                 method: 'POST',
@@ -252,7 +252,7 @@ async function acknowledgeCourier(courierId) {
             alert('Error: ' + error.message);
         }
     };
-    
+
     window.closeSignatureModal = () => {
         document.body.removeChild(modal);
         delete window.clearSignature;

@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+// API_BASE_URL is defined in auth.js
 
 // Check authentication
 if (!checkAuth()) {
@@ -24,12 +24,12 @@ async function loadDashboard() {
             document.getElementById('totalBills').textContent = statsData.bills.total || 0;
             document.getElementById('pendingBills').textContent = statsData.bills.pending || 0;
             document.getElementById('totalCouriers').textContent = statsData.couriers.total || 0;
-            document.getElementById('delayedPickups').textContent = statsData.couriers.delayed || 0;
+            document.getElementById('delayedPickups').textContent = statsData.couriers.delayed_count || 0;
             document.getElementById('totalAssets').textContent = statsData.assets.total || 0;
             document.getElementById('overdueAssets').textContent = statsData.assets.overdue || 0;
             document.getElementById('openComplaints').textContent = statsData.complaints.open || 0;
-            const avgHours = statsData.complaints.avg_resolution_hours 
-                ? Math.round(statsData.complaints.avg_resolution_hours) 
+            const avgHours = statsData.complaints.avg_resolution_hours
+                ? Math.round(statsData.complaints.avg_resolution_hours)
                 : 0;
             document.getElementById('avgResolution').textContent = `${avgHours}h`;
         }
@@ -94,7 +94,7 @@ function drawBarChart(canvasId, data, xLabel, yLabel, title) {
     const maxValue = Math.max(...data.map(d => d.count || d[yLabel.toLowerCase()] || 0));
 
     // Draw axes
-    ctx.strokeStyle = '#64748b';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(padding, padding);
@@ -104,7 +104,7 @@ function drawBarChart(canvasId, data, xLabel, yLabel, title) {
 
     // Draw bars
     const barWidth = chartWidth / data.length;
-    const colors = ['#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
+    const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
 
     data.forEach((item, index) => {
         const value = item.count || item[yLabel.toLowerCase()] || 0;
@@ -118,19 +118,20 @@ function drawBarChart(canvasId, data, xLabel, yLabel, title) {
         ctx.fillRect(x, y, w, barHeight);
 
         // Draw label
-        ctx.fillStyle = '#1e293b';
-        ctx.font = '12px sans-serif';
+        ctx.fillStyle = '#f1f5f9';
+        ctx.font = '12px Inter, sans-serif';
         ctx.textAlign = 'center';
         const label = item[xLabel.toLowerCase()] || item.category || item.priority || index + 1;
         ctx.fillText(label, x + w / 2, height - padding + 20);
 
         // Draw value
+        ctx.fillStyle = '#f1f5f9';
         ctx.fillText(value.toString(), x + w / 2, y - 5);
     });
 
     // Draw title
-    ctx.fillStyle = '#1e293b';
-    ctx.font = 'bold 16px sans-serif';
+    ctx.fillStyle = '#f1f5f9';
+    ctx.font = 'bold 16px Inter, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText(title, width / 2, 30);
 }
@@ -156,7 +157,7 @@ function drawPieChart(canvasId, data, title) {
 
     // Draw pie slices
     let currentAngle = -Math.PI / 2;
-    const colors = ['#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
+    const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
 
     data.forEach((item, index) => {
         const value = item.count || 0;
@@ -169,7 +170,7 @@ function drawPieChart(canvasId, data, title) {
         ctx.closePath();
         ctx.fillStyle = colors[index % colors.length];
         ctx.fill();
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = '#1e293b'; // Dark border to match bg
         ctx.lineWidth = 2;
         ctx.stroke();
 
@@ -177,8 +178,9 @@ function drawPieChart(canvasId, data, title) {
         const labelAngle = currentAngle + sliceAngle / 2;
         const labelX = centerX + Math.cos(labelAngle) * (radius * 0.7);
         const labelY = centerY + Math.sin(labelAngle) * (radius * 0.7);
-        ctx.fillStyle = '#1e293b';
-        ctx.font = '12px sans-serif';
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '12px Inter, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText(item.category || item.priority || `Item ${index + 1}`, labelX, labelY);
 
@@ -190,8 +192,8 @@ function drawPieChart(canvasId, data, title) {
     });
 
     // Draw title
-    ctx.fillStyle = '#1e293b';
-    ctx.font = 'bold 16px sans-serif';
+    ctx.fillStyle = '#f1f5f9';
+    ctx.font = 'bold 16px Inter, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText(title, centerX, 30);
 }

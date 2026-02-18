@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+// API_BASE_URL is defined in auth.js
 
 // Check authentication
 if (!checkAuth()) {
@@ -35,7 +35,7 @@ async function loadBillDetail() {
         displayBillDetail(data.bill, data.approvals);
     } catch (error) {
         console.error('Load bill error:', error);
-        document.getElementById('billDetailCard').innerHTML = 
+        document.getElementById('billDetailCard').innerHTML =
             `<div class="error-message show">Error loading bill: ${error.message}</div>`;
     }
 }
@@ -44,7 +44,7 @@ async function loadBillDetail() {
 function displayBillDetail(bill, approvals) {
     const card = document.getElementById('billDetailCard');
     const statusClass = `badge-${bill.final_status.toLowerCase()}`;
-    
+
     card.innerHTML = `
         <div class="card-header">
             <h2>Bill #${bill.bill_number || bill.id}</h2>
@@ -96,7 +96,7 @@ function displayBillDetail(bill, approvals) {
     if (approvals && approvals.length > 0) {
         const historyCard = document.getElementById('approvalHistoryCard');
         historyCard.style.display = 'block';
-        
+
         const tbody = document.getElementById('approvalHistoryBody');
         tbody.innerHTML = '';
 
@@ -123,7 +123,7 @@ function displayBillDetail(bill, approvals) {
 function checkCanApprove(bill, approvals) {
     // Check if bill is pending and user hasn't approved yet
     if (bill.final_status === 'Pending') {
-        const userApproval = approvals?.find(a => 
+        const userApproval = approvals?.find(a =>
             a.approver_id === user.id && a.status === 'Pending'
         );
 

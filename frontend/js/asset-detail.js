@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+// API_BASE_URL is defined in auth.js
 
 // Check authentication
 if (!checkAuth()) {
@@ -37,7 +37,7 @@ async function loadAssetDetail() {
         displayAssetDetail(data.asset, data.transactions, data.history, data.damageReports);
     } catch (error) {
         console.error('Load asset error:', error);
-        document.getElementById('assetDetailCard').innerHTML = 
+        document.getElementById('assetDetailCard').innerHTML =
             `<div class="error-message show">Error loading asset: ${error.message}</div>`;
     }
 }
@@ -46,7 +46,7 @@ async function loadAssetDetail() {
 function displayAssetDetail(asset, transactions, history, damageReports) {
     const card = document.getElementById('assetDetailCard');
     const statusClass = `badge-${asset.current_status.toLowerCase()}`;
-    
+
     card.innerHTML = `
         <div class="card-header">
             <h2>Asset: ${asset.asset_id}</h2>
@@ -88,7 +88,7 @@ function displayAssetDetail(asset, transactions, history, damageReports) {
     if (transactions && transactions.length > 0) {
         const transactionsCard = document.getElementById('transactionsCard');
         transactionsCard.style.display = 'block';
-        
+
         const tbody = document.getElementById('transactionsTableBody');
         tbody.innerHTML = '';
 
@@ -103,9 +103,9 @@ function displayAssetDetail(asset, transactions, history, damageReports) {
                 <td>${transaction.return_date || '-'}</td>
                 <td><span class="badge ${statusClass}">${transaction.status}</span></td>
                 <td>
-                    ${canReturn && user.role === 'Admin' ? 
-                        `<button class="btn btn-primary btn-sm" onclick="showReturnForm(${transaction.id})">Return</button>` : 
-                        '-'}
+                    ${canReturn && user.role === 'Admin' ?
+                    `<button class="btn btn-primary btn-sm" onclick="showReturnForm(${transaction.id})">Return</button>` :
+                    '-'}
                 </td>
             `;
             tbody.appendChild(row);
@@ -116,7 +116,7 @@ function displayAssetDetail(asset, transactions, history, damageReports) {
     if (history && history.length > 0) {
         const historyCard = document.getElementById('historyCard');
         historyCard.style.display = 'block';
-        
+
         const tbody = document.getElementById('historyTableBody');
         tbody.innerHTML = '';
 
@@ -135,7 +135,7 @@ function displayAssetDetail(asset, transactions, history, damageReports) {
 }
 
 // Show return form
-window.showReturnForm = function(transactionId) {
+window.showReturnForm = function (transactionId) {
     document.getElementById('returnTransactionId').value = transactionId;
     document.getElementById('returnFormCard').style.display = 'block';
 };
@@ -157,7 +157,7 @@ document.getElementById('damageImageFile').addEventListener('change', async (e) 
             });
 
             const data = await response.json();
-            
+
             if (response.ok) {
                 damageImagePath = data.imagePath;
                 const preview = document.getElementById('damageImagePreview');

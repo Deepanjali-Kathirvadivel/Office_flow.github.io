@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+const API_BASE_URL = 'http://localhost:3000/api';
 
 // Check if user is logged in
 function checkAuth() {
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const errorMessage = document.getElementById('errorMessage');
@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
-                
-                window.location.href = '/dashboard.html';
+
+                window.location.href = 'dashboard.html';
             } catch (error) {
                 errorMessage.textContent = 'Network error. Please try again.';
                 errorMessage.classList.add('show');
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // If already logged in and on login page, redirect to dashboard
     if (getAuthToken() && (window.location.pathname.includes('login.html') || window.location.pathname === '/')) {
-        window.location.href = '/dashboard.html';
+        window.location.href = 'dashboard.html';
     }
 });
 
@@ -74,6 +74,7 @@ function logout() {
     localStorage.removeItem('user');
     window.location.href = '/login.html';
 }
+window.logout = logout;
 
 // Get current user
 function getCurrentUser() {

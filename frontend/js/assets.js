@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+// API_BASE_URL is defined in auth.js
 
 // Check authentication
 if (!checkAuth()) {
@@ -9,7 +9,7 @@ if (!checkAuth()) {
 const user = getCurrentUser();
 if (user) {
     document.getElementById('userName').textContent = `${user.full_name} (${user.role})`;
-    
+
     // Show admin buttons
     if (user.role === 'Admin') {
         document.getElementById('newAssetBtn').style.display = 'inline-flex';
@@ -68,7 +68,7 @@ document.getElementById('assetImageFile').addEventListener('change', async (e) =
             });
 
             const data = await response.json();
-            
+
             if (response.ok) {
                 assetImagePath = data.imagePath;
                 const preview = document.getElementById('assetImagePreview');
@@ -234,7 +234,7 @@ async function loadAssets() {
         });
     } catch (error) {
         console.error('Load assets error:', error);
-        document.getElementById('assetsTableBody').innerHTML = 
+        document.getElementById('assetsTableBody').innerHTML =
             '<tr><td colspan="6" class="loading">Error loading assets</td></tr>';
     }
 }

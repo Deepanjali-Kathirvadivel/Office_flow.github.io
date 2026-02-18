@@ -4,7 +4,7 @@ const { pool } = require('../db');
 async function getDashboardStats(req, res) {
   try {
     const { startDate, endDate } = req.query;
-    const dateFilter = startDate && endDate ? 
+    const dateFilter = startDate && endDate ?
       `AND created_at BETWEEN ? AND ?` : '';
 
     const params = startDate && endDate ? [startDate, endDate] : [];
@@ -28,7 +28,7 @@ async function getDashboardStats(req, res) {
         COUNT(*) as total,
         SUM(CASE WHEN status = 'Pending Pickup' THEN 1 ELSE 0 END) as pending,
         SUM(CASE WHEN status = 'Collected' THEN 1 ELSE 0 END) as collected,
-        SUM(CASE WHEN created_at < DATE_SUB(NOW(), INTERVAL 24 HOUR) AND id NOT IN (SELECT courier_id FROM courier_acknowledgements) THEN 1 ELSE 0 END) as delayed
+        SUM(CASE WHEN created_at < DATE_SUB(NOW(), INTERVAL 24 HOUR) AND id NOT IN (SELECT courier_id FROM courier_acknowledgements) THEN 1 ELSE 0 END) as delayed_count
        FROM couriers 
        WHERE 1=1 ${dateFilter}`,
       params
@@ -75,7 +75,7 @@ async function getDashboardStats(req, res) {
 async function getComplaintsByCategory(req, res) {
   try {
     const { startDate, endDate } = req.query;
-    const dateFilter = startDate && endDate ? 
+    const dateFilter = startDate && endDate ?
       `AND created_at BETWEEN ? AND ?` : '';
 
     const params = startDate && endDate ? [startDate, endDate] : [];
@@ -100,7 +100,7 @@ async function getComplaintsByCategory(req, res) {
 async function getComplaintsByPriority(req, res) {
   try {
     const { startDate, endDate } = req.query;
-    const dateFilter = startDate && endDate ? 
+    const dateFilter = startDate && endDate ?
       `AND created_at BETWEEN ? AND ?` : '';
 
     const params = startDate && endDate ? [startDate, endDate] : [];
@@ -151,7 +151,7 @@ async function getMonthlyParcelCount(req, res) {
 async function getVendorPerformance(req, res) {
   try {
     const { startDate, endDate } = req.query;
-    const dateFilter = startDate && endDate ? 
+    const dateFilter = startDate && endDate ?
       `AND c.created_at BETWEEN ? AND ?` : '';
 
     const params = startDate && endDate ? [startDate, endDate] : [];

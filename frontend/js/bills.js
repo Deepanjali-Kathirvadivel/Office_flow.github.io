@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+// API_BASE_URL is defined in auth.js
 
 // Check authentication
 if (!checkAuth()) {
@@ -44,18 +44,18 @@ document.getElementById('captureBtn').addEventListener('click', () => {
     const video = document.getElementById('videoElement');
     const canvas = document.getElementById('captureCanvas');
     const ctx = canvas.getContext('2d');
-    
+
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     ctx.drawImage(video, 0, 0);
-    
+
     const imageData = canvas.toDataURL('image/jpeg');
     capturedImageData = imageData;
-    
+
     const img = document.getElementById('capturedImage');
     img.src = imageData;
     img.style.display = 'block';
-    
+
     // Stop camera
     if (stream) {
         stream.getTracks().forEach(track => track.stop());
@@ -88,7 +88,7 @@ async function uploadAndProcessImage(imageData) {
         // Convert data URL to blob
         const response = await fetch(imageData);
         const blob = await response.blob();
-        
+
         const formData = new FormData();
         formData.append('image', blob, 'bill.jpg');
 
@@ -101,7 +101,7 @@ async function uploadAndProcessImage(imageData) {
         });
 
         const data = await uploadResponse.json();
-        
+
         if (!uploadResponse.ok) {
             throw new Error(data.error || 'Upload failed');
         }
@@ -133,7 +133,7 @@ function fillFormFromOCR(ocrData) {
 }
 
 // Process image when captured
-document.getElementById('capturedImage').addEventListener('load', async function() {
+document.getElementById('capturedImage').addEventListener('load', async function () {
     if (capturedImageData) {
         try {
             const messageDiv = document.getElementById('billMessage');
@@ -144,7 +144,7 @@ document.getElementById('capturedImage').addEventListener('load', async function
 
             const ocrData = await uploadAndProcessImage(capturedImageData);
             fillFormFromOCR(ocrData);
-            
+
             messageDiv.textContent = 'OCR processing complete. Please review and edit fields.';
         } catch (error) {
             const messageDiv = document.getElementById('billMessage');
@@ -159,7 +159,7 @@ document.getElementById('capturedImage').addEventListener('load', async function
 // Submit bill form
 document.getElementById('billForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData(e.target);
     const billData = {
         bill_number: formData.get('bill_number'),
@@ -246,7 +246,7 @@ async function loadBills() {
         });
     } catch (error) {
         console.error('Load bills error:', error);
-        document.getElementById('billsTableBody').innerHTML = 
+        document.getElementById('billsTableBody').innerHTML =
             '<tr><td colspan="6" class="loading">Error loading bills</td></tr>';
     }
 }
